@@ -1,19 +1,28 @@
 'use client';
 
-import { authClient } from '@/lib/auth/client';
+import { useState } from 'react';
+
+import { signIn } from '@/lib/auth/client';
+import { fetchCallback } from '@/lib/auth/utils';
 import { Button } from '@/components/ui/button';
 
 export function GoogleButton(props: React.ComponentProps<'button'>) {
+  const [isPending, setIsPending] = useState<boolean>(false);
+
   return (
     <Button
       variant="outline"
       className="w-full"
       {...props}
+      disabled={isPending}
       onClick={async () => {
-        await authClient.signIn.social({
-          provider: 'google',
-          callbackURL: '/dashboard',
-        });
+        await signIn.social(
+          {
+            provider: 'google',
+            callbackURL: '/dashboard',
+          },
+          fetchCallback({ setIsPending })
+        );
       }}
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

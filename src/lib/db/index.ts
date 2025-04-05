@@ -7,7 +7,6 @@ import * as schema from './schema';
 const db = drizzle({
   connection: {
     connectionString: env.DATABASE_URL,
-    ssl: true,
   },
   schema,
 });

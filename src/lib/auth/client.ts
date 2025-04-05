@@ -1,9 +1,8 @@
-import { organizationClient } from 'better-auth/client/plugins';
 import { createAuthClient } from 'better-auth/react';
 import { toast } from 'sonner';
 
 export const authClient = createAuthClient({
-  plugins: [organizationClient()],
+  plugins: [],
   fetchOptions: {
     onError: (ctx) => {
       toast.error(ctx.error.message);
@@ -11,4 +10,4 @@ export const authClient = createAuthClient({
   },
 });
 
-export const { useSession, signOut } = authClient;
+export const { useSession, signIn, signOut } = authClient;
