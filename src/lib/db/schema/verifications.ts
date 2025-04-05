@@ -3,7 +3,7 @@ import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
 import { changedAt } from '@/lib/db/utils';
 
-export const verification = pgTable('verification', {
+export const verifications = pgTable('verification', {
   id: text('id').primaryKey(),
   identifier: text('identifier').notNull(),
   value: text('value').notNull(),
@@ -11,5 +11,5 @@ export const verification = pgTable('verification', {
   ...changedAt(),
 });
 
-export type SelectVerification = InferSelectModel<typeof verification>;
-export type InsertVerificaton = InferInsertModel<typeof verification>;
+export type Verification = InferSelectModel<typeof verifications>;
+export type NewVerificaton = InferInsertModel<typeof verifications>;

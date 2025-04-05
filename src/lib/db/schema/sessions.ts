@@ -1,9 +1,9 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
-import { userIdReference } from '@/lib/db/schema/user';
+import { userIdReference } from '@/lib/db/schema/users';
 
-export const session = pgTable('session', {
+export const sessions = pgTable('session', {
   id: text('id').primaryKey(),
   expiresAt: timestamp('expires_at').notNull(),
   token: text('token').notNull().unique(),
@@ -14,5 +14,5 @@ export const session = pgTable('session', {
   ...userIdReference(),
 });
 
-export type SelectSession = InferSelectModel<typeof session>;
-export type InsertSession = InferInsertModel<typeof session>;
+export type Session = InferSelectModel<typeof sessions>;
+export type NewSession = InferInsertModel<typeof sessions>;

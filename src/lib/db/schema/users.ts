@@ -18,7 +18,7 @@ export enum UserRole {
   GUEST = 'GUEST',
 }
 
-export const user = pgTable('user', {
+export const users = pgTable('user', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   name: text('name'),
   displayName: text('display_name'),
@@ -34,8 +34,8 @@ export const user = pgTable('user', {
 export const userIdReference = () => ({
   userId: uuid('user_id')
     .notNull()
-    .references(() => user.id, { onDelete: 'cascade' }),
+    .references(() => users.id, { onDelete: 'cascade' }),
 });
 
-export type SelectUser = InferSelectModel<typeof user>;
-export type InsertUser = InferInsertModel<typeof user>;
+export type User = InferSelectModel<typeof users>;
+export type NewUser = InferInsertModel<typeof users>;

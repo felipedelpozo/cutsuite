@@ -1,5 +1,13 @@
 {
   "HomePage": {
     "title": "Hello world!"
+  },
+  "ErrorPage": {
+    "404": {
+      "title": "Page not found",
+      "description": "The page you are looking for does not exist."
+    },
+    "goBack": "Go Back",
+    "goHome": "Back to Home"
   }
 }

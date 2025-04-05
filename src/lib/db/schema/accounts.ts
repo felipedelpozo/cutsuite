@@ -1,10 +1,10 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
-import { userIdReference } from '@/lib/db/schema/user';
+import { userIdReference } from '@/lib/db/schema/users';
 import { changedAt } from '@/lib/db/utils';
 
-export const account = pgTable('account', {
+export const accounts = pgTable('account', {
   id: text('id').primaryKey(),
   accountId: text('account_id').notNull(),
   providerId: text('provider_id').notNull(),
@@ -19,5 +19,5 @@ export const account = pgTable('account', {
   ...changedAt(),
 });
 
-export type SelectAccount = InferSelectModel<typeof account>;
-export type InsertAccount = InferInsertModel<typeof account>;
+export type Account = InferSelectModel<typeof accounts>;
+export type NewAccount = InferInsertModel<typeof accounts>;
