@@ -13,7 +13,7 @@ export const organizations = pgTable('organization', {
 });
 
 export const organizationIdReference = () => ({
-  userId: uuid('organization_id')
+  organizationId: uuid('organization_id')
     .notNull()
     .references(() => organizations.id, { onDelete: 'cascade' }),
 });

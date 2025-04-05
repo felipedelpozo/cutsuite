@@ -3,14 +3,6 @@ import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
 import { changedAt } from '@/lib/db/utils';
 
-// export const userRoleEnum = pgEnum('user_role', ['ADMIN', 'USER', 'GUEST']);
-
-// export enum UserRole {
-//   ADMIN = 'ADMIN',
-//   USER = 'USER',
-//   GUEST = 'GUEST',
-// }
-
 export const users = pgTable('user', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
