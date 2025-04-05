@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import {
   IconCreditCard,
   IconDotsVertical,
@@ -8,7 +9,7 @@ import {
   IconUserCircle,
 } from '@tabler/icons-react';
 
-import { useSession } from '@/lib/auth/client';
+import { signOut, useSession } from '@/lib/auth/client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -27,6 +28,8 @@ import {
 } from '@/components/ui/sidebar';
 
 export function NavUser() {
+  const router = useRouter();
+
   const { isMobile } = useSidebar();
   const { data: session } = useSession();
 
@@ -102,7 +105,17 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={async () =>
+                await signOut({
+                  fetchOptions: {
+                    onSuccess: () => {
+                      router.push('/login');
+                    },
+                  },
+                })
+              }
+            >
               <IconLogout />
               Log out
             </DropdownMenuItem>
