@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { fetchInstance } from '@/actions/evolution-api/instances';
 
-import { api } from '@/lib/evolution-api';
 import { Button } from '@/components/ui/button';
 
 export function EvolutionApiQrbuttonButton(
@@ -13,10 +13,10 @@ export function EvolutionApiQrbuttonButton(
   const handleClick = async () => {
     setIsPending(true);
     try {
-      const result = await api.createInstance({
-        instanceName: 'my-instance',
-        qrcode: true,
+      const result = await fetchInstance({
+        name: 'Business2',
       });
+
       console.log('Instance created:', result);
       return result;
     } catch (error) {

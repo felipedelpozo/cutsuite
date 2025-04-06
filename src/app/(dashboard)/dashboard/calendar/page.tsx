@@ -32,7 +32,6 @@ export default function Home() {
         onEventUpdate={handleEventUpdate}
         onEventDelete={handleEventDelete}
         initialView="day"
-        viewSelector={false}
       />
     </div>
   );
