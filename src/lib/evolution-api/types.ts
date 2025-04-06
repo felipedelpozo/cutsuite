@@ -21,7 +21,7 @@ export interface Settings {
 export interface Qrcode {
   pairingCode: string | null;
   code: string;
-  base64: string;
+  base64?: string;
   count: number;
 }
 
@@ -45,8 +45,4 @@ export interface InstanceConnectionResponse {
   instance: InstanceConnectionState;
 }
 
-export interface InstanceConnectResponse {
-  pairingCode: string;
-  code: string;
-  count: number;
-}
+export type InstanceConnectResponse = Qrcode;

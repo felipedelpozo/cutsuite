@@ -6,6 +6,7 @@ type FetchInstanceResponse = {
   instanceName: string;
   state: string;
   code?: string;
+  pairingCode?: string | null;
 };
 
 export const fetchInstance = async ({
@@ -27,17 +28,15 @@ export const fetchInstance = async ({
       instanceName: name,
       state: 'connecting',
       code: data.code,
+      pairingCode: data.pairingCode,
     };
   } catch {
-    try {
-      const { data } = await api.instanceCreate(name, true);
-      return {
-        instanceName: data.instance.instanceName,
-        state: data.instance.status,
-        code: data.qrcode.code,
-      };
-    } catch (error) {
-      console.log({ error });
-    }
+    const { data } = await api.instanceCreate(name, true);
+    return {
+      instanceName: data.instance.instanceName,
+      state: data.instance.status,
+      code: data.qrcode.code,
+      pairingCode: data.qrcode.pairingCode,
+    };
   }
 };

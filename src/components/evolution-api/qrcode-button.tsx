@@ -3,10 +3,16 @@
 import { useState } from 'react';
 import { fetchInstance } from '@/actions/evolution-api/instances';
 import { QRCodeSVG } from 'qrcode.react';
+import { useInterval } from 'usehooks-ts';
 
 import { useSession } from '@/lib/auth/client';
-import { Dialog, DialogContent } from '@/components/ui//dialog';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 export function EvolutionApiQrbuttonButton(
   props: React.ComponentProps<'button'>
@@ -17,23 +23,25 @@ export function EvolutionApiQrbuttonButton(
 
   const handleClick = async () => {
     setIsPending(true);
-    try {
-      const result = await fetchInstance({
-        name: 'Bussiness2',
-      });
+    const result = await fetchInstance({
+      name: 'Bussiness2',
+    });
 
-      setCode(result.code ?? undefined);
-      return result;
-    } catch (error) {
-      console.error('Error creating instance:', error);
-    }
+    setCode(result.state !== 'open' && result.code ? result.code : undefined);
   };
+
+  useInterval(() => handleClick(), code !== undefined ? 10000 : null);
 
   return (
     <>
       <Dialog open={!!code}>
         <DialogContent className="sm:max-w-md">
-          <QRCodeSVG value={code!} />
+          <DialogHeader>
+            <DialogTitle>Qr</DialogTitle>
+          </DialogHeader>
+          <div className="m-auto flex h-full w-full flex-col items-center justify-center gap-2">
+            <QRCodeSVG value={code!} size={256} />
+          </div>
         </DialogContent>
       </Dialog>
       <Button
