@@ -46,3 +46,11 @@ export interface InstanceConnectionResponse {
 }
 
 export type InstanceConnectResponse = Qrcode;
+
+export type InstanceLogoutResponse = {
+  status: string;
+  error: boolean;
+  response: {
+    message: string;
+  };
+};

@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { sampleEvents } from '@/components/dashboard/sample-events';
 import { EventCalendar, type CalendarEvent } from '@/components/event-calendar';
-import { EvolutionApiQrbuttonButton } from '@/components/evolution-api/qrcode-button';
 
 export default function Page() {
   const [events, setEvents] = useState<CalendarEvent[]>(sampleEvents);
@@ -35,7 +34,6 @@ export default function Page() {
         initialView="day"
         viewSelector={false}
       />
-      <EvolutionApiQrbuttonButton />
     </div>
   );
 }

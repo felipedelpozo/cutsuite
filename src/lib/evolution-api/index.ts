@@ -5,6 +5,7 @@ import {
   InstanceConnectionResponse,
   InstanceConnectResponse,
   InstanceCreateResponse,
+  InstanceLogoutResponse,
 } from '@/lib/evolution-api/types';
 
 const api = axios.create({
@@ -39,6 +40,12 @@ export const instanceConnect = async (
   name: string
 ): Promise<AxiosResponse<InstanceConnectResponse>> => {
   return api.get<InstanceConnectResponse>(`/instance/connect/${name}`);
+};
+
+export const instanceLogout = async (
+  name: string
+): Promise<AxiosResponse<InstanceLogoutResponse>> => {
+  return api.delete<InstanceLogoutResponse>(`/instance/logout/${name}`);
 };
 
 export default api;

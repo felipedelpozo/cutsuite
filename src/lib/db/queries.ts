@@ -12,6 +12,33 @@ import {
   users,
 } from './schema';
 
+export async function getOrganization() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    throw new Error('Session not found');
+  }
+
+  const result = await db
+    .select({
+      id: organizations.id,
+      name: organizations.name,
+      slug: organizations.slug,
+      logo: organizations.logo,
+      metadata: organizations.metadata,
+      createdAt: organizations.createdAt,
+      updatedAt: organizations.updatedAt,
+    })
+    .from(organizations)
+    .innerJoin(members, eq(organizations.id, members.organizationId))
+    .where(eq(members.userId, session.user.id))
+    .limit(1);
+
+  return result[0];
+}
+
 export async function updateOrganizationSubscription(
   organizationId: string,
   subscriptionData: {

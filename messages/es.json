@@ -10,5 +10,16 @@
     },
     "goBack": "Go Back",
     "goHome": "Back to Home"
+  },
+  "Dashboard": {
+    "Apps": {
+      "AppStatus": {
+        "CONNECT": "Connect",
+        "CONNECTED": "Disconnect",
+        "DISCONNECTED": "Disconnected",
+        "CONNECTING": "Connecting",
+        "LOADING": "Loading"
+      }
+    }
   }
 }
