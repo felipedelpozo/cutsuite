@@ -25,7 +25,7 @@ export interface Qrcode {
   count: number;
 }
 
-export interface EvolutionApiResponse {
+export interface InstanceCreateResponse {
   instance: Instance;
   hash: string;
   webhook: Record<string, unknown>;
@@ -43,4 +43,10 @@ export interface InstanceConnectionState {
 
 export interface InstanceConnectionResponse {
   instance: InstanceConnectionState;
+}
+
+export interface InstanceConnectResponse {
+  pairingCode: string;
+  code: string;
+  count: number;
 }

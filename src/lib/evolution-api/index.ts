@@ -2,8 +2,9 @@ import axios, { AxiosResponse } from 'axios';
 
 import env from '@/lib/env';
 import {
-  EvolutionApiResponse,
   InstanceConnectionResponse,
+  InstanceConnectResponse,
+  InstanceCreateResponse,
 } from '@/lib/evolution-api/types';
 
 const api = axios.create({
@@ -24,13 +25,20 @@ export const instanceConnectionState = async (
 };
 
 export const instanceCreate = async (
-  name: string,
+  instanceName: string,
   qrcode?: boolean
-): Promise<AxiosResponse<EvolutionApiResponse>> => {
-  return api.post<EvolutionApiResponse>('/instance/create', {
-    name,
-    qrcode: qrcode || false,
+): Promise<AxiosResponse<InstanceCreateResponse>> => {
+  return api.post<InstanceCreateResponse>('/instance/create', {
+    instanceName,
+    qrcode: qrcode ?? false,
+    integration: 'WHATSAPP-BAILEYS',
   });
+};
+
+export const instanceConnect = async (
+  name: string
+): Promise<AxiosResponse<InstanceConnectResponse>> => {
+  return api.get<InstanceConnectResponse>(`/instance/connect/${name}`);
 };
 
 export default api;
