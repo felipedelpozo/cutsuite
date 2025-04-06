@@ -1,13 +1,45 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import {
+  pgEnum,
+  pgTable,
+  serial,
+  timestamp,
+  varchar,
+} from 'drizzle-orm/pg-core';
 
 import { organizationIdReference } from '@/lib/db/schema/organizations';
 
 import { userIdReference } from './users';
 
+export const activityTypeEnum = pgEnum('type', [
+  'SIGN_UP',
+  'SIGN_IN',
+  'SIGN_OUT',
+  'UPDATE_PASSWORD',
+  'DELETE_ACCOUNT',
+  'UPDATE_ACCOUNT',
+  'CREATE_TEAM',
+  'REMOVE_TEAM_MEMBER',
+  'INVITE_TEAM_MEMBER',
+  'ACCEPT_INVITATION',
+]);
+
+export enum ActivityType {
+  SIGN_UP = 'SIGN_UP',
+  SIGN_IN = 'SIGN_IN',
+  SIGN_OUT = 'SIGN_OUT',
+  UPDATE_PASSWORD = 'UPDATE_PASSWORD',
+  DELETE_ACCOUNT = 'DELETE_ACCOUNT',
+  UPDATE_ACCOUNT = 'UPDATE_ACCOUNT',
+  CREATE_TEAM = 'CREATE_TEAM',
+  REMOVE_TEAM_MEMBER = 'REMOVE_TEAM_MEMBER',
+  INVITE_TEAM_MEMBER = 'INVITE_TEAM_MEMBER',
+  ACCEPT_INVITATION = 'ACCEPT_INVITATION',
+}
+
 export const activityLogs = pgTable('activity_logs', {
   id: serial('id').primaryKey(),
-  action: text('action').notNull(),
+  type: activityTypeEnum('role'),
   timestamp: timestamp('timestamp').notNull().defaultNow(),
   ipAddress: varchar('ip_address', { length: 45 }),
   ...userIdReference(),

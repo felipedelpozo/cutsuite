@@ -1,5 +1,5 @@
 {
-  "id": "5c619889-f6ad-4025-ac28-970b886ef6a4",
+  "id": "1fe7a071-3f58-4b69-b1da-c81ede5c2058",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -123,11 +123,12 @@
           "primaryKey": true,
           "notNull": true
         },
-        "action": {
-          "name": "action",
-          "type": "text",
+        "role": {
+          "name": "role",
+          "type": "type",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "timestamp": {
           "name": "timestamp",
@@ -722,6 +723,22 @@
     }
   },
   "enums": {
+    "public.type": {
+      "name": "type",
+      "schema": "public",
+      "values": [
+        "SIGN_UP",
+        "SIGN_IN",
+        "SIGN_OUT",
+        "UPDATE_PASSWORD",
+        "DELETE_ACCOUNT",
+        "UPDATE_ACCOUNT",
+        "CREATE_TEAM",
+        "REMOVE_TEAM_MEMBER",
+        "INVITE_TEAM_MEMBER",
+        "ACCEPT_INVITATION"
+      ]
+    },
     "public.member_role": {
       "name": "member_role",
       "schema": "public",
