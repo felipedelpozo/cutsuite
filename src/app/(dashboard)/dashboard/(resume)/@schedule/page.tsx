@@ -25,15 +25,13 @@ export default function Page() {
   };
 
   return (
-    <div className="@container p-1 sm:w-full sm:p-4 md:max-w-sm">
-      <EventCalendar
-        events={events}
-        onEventAdd={handleEventAdd}
-        onEventUpdate={handleEventUpdate}
-        onEventDelete={handleEventDelete}
-        initialView="day"
-        viewSelector={false}
-      />
-    </div>
+    <EventCalendar
+      events={events}
+      onEventAdd={handleEventAdd}
+      onEventUpdate={handleEventUpdate}
+      onEventDelete={handleEventDelete}
+      initialView="day"
+      viewSelector={false}
+    />
   );
 }
