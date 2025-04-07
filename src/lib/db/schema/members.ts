@@ -2,9 +2,8 @@ import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { jsonb, pgEnum, pgTable, text, uuid } from 'drizzle-orm/pg-core';
 
 import { organizationIdReference } from '@/lib/db/schema/organizations';
+import { userIdReference } from '@/lib/db/schema/users';
 import { changedAt } from '@/lib/db/utils';
-
-import { userIdReference } from './users';
 
 export const memberRoleEnum = pgEnum('member_role', ['ADMIN', 'USER', 'GUEST']);
 
@@ -25,6 +24,12 @@ export const members = pgTable('member', {
   ...userIdReference(),
   ...organizationIdReference(),
   ...changedAt(),
+});
+
+export const memberIdReference = () => ({
+  member_id: uuid('member_id')
+    .notNull()
+    .references(() => members.id),
 });
 
 export type Member = InferSelectModel<typeof members>;
