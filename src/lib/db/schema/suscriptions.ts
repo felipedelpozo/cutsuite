@@ -11,7 +11,7 @@ export const subscriptions = pgTable('subscription', {
   stripeProductId: text('stripeProductId'),
   planName: text('planName'),
   subscriptionStatus: text('subscriptionStatus').notNull(),
-  ...organizationIdReference(),
+  ...organizationIdReference({ onDelete: 'cascade' }),
   ...changedAt(),
 });
 

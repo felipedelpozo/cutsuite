@@ -14,7 +14,7 @@ export const invitations = pgTable('invitation', {
   inviterId: text('inviterId')
     .notNull()
     .references(() => users.id),
-  ...organizationIdReference(),
+  ...organizationIdReference({ onDelete: 'cascade' }),
   expiresAt: timestamp('expiresAt').notNull(),
   ...changedAt(),
 });

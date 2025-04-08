@@ -24,7 +24,7 @@ export const instances = pgTable('instance', {
   name: text('title').notNull(),
   status: instanceStatusEnum('status').default(InstanceStatus.DISCONNECTED),
   ...serviceIdReference(),
-  ...organizationIdReference(),
+  ...organizationIdReference({ onDelete: 'cascade' }),
   ...changedAt(),
 });
 

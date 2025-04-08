@@ -14,7 +14,7 @@ export const events = pgTable('event', {
   end: timestamp('end').notNull(),
   allDay: boolean('allDay').default(false),
   color: text('color').notNull(),
-  ...organizationIdReference(),
+  ...organizationIdReference({ onDelete: 'cascade' }),
   ...memberIdReference(),
   ...customerIdReference(),
   ...changedAt(),

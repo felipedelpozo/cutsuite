@@ -1,5 +1,5 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { pgTable, text, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, ReferenceConfig, text, uuid } from 'drizzle-orm/pg-core';
 
 import { memberIdReference } from '@/lib/db/schema/members';
 import { organizationIdReference } from '@/lib/db/schema/organizations';
@@ -13,14 +13,14 @@ export const customers = pgTable('customer', {
   phoneNumber: text('phone_number'),
   image: text('image'),
   ...memberIdReference(),
-  ...organizationIdReference(),
+  ...organizationIdReference({ onDelete: 'cascade' }),
   ...changedAt(),
 });
 
-export const customerIdReference = () => ({
+export const customerIdReference = (actions?: ReferenceConfig['actions']) => ({
   customer_id: uuid('customer_id')
     .notNull()
-    .references(() => customers.id),
+    .references(() => customers.id, actions),
 });
 
 export type Customer = InferSelectModel<typeof customers>;

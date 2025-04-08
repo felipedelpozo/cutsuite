@@ -2,6 +2,7 @@ export * from './accounts';
 export * from './activity-logs';
 export * from './customers';
 export * from './documents';
+export * from './embeddings';
 export * from './events';
 export * from './instances';
 export * from './invitations';

@@ -1,5 +1,5 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { pgTable, text, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, ReferenceConfig, text, uuid } from 'drizzle-orm/pg-core';
 
 import { changedAt } from '@/lib/db/utils';
 
@@ -12,10 +12,12 @@ export const organizations = pgTable('organization', {
   ...changedAt(),
 });
 
-export const organizationIdReference = () => ({
+export const organizationIdReference = (
+  actions?: ReferenceConfig['actions']
+) => ({
   organizationId: uuid('organization_id')
     .notNull()
-    .references(() => organizations.id, { onDelete: 'cascade' }),
+    .references(() => organizations.id, actions),
 });
 
 export type Organization = InferSelectModel<typeof organizations>;

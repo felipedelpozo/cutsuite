@@ -1,5 +1,12 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { jsonb, pgEnum, pgTable, text, uuid } from 'drizzle-orm/pg-core';
+import {
+  jsonb,
+  pgEnum,
+  pgTable,
+  ReferenceConfig,
+  text,
+  uuid,
+} from 'drizzle-orm/pg-core';
 
 import { organizationIdReference } from '@/lib/db/schema/organizations';
 import { userIdReference } from '@/lib/db/schema/users';
@@ -22,14 +29,14 @@ export const members = pgTable('member', {
   image: text('image'),
   preferences: jsonb('preferences').notNull().default('{}'),
   ...userIdReference(),
-  ...organizationIdReference(),
+  ...organizationIdReference({ onDelete: 'cascade' }),
   ...changedAt(),
 });
 
-export const memberIdReference = () => ({
+export const memberIdReference = (actions?: ReferenceConfig['actions']) => ({
   member_id: uuid('member_id')
     .notNull()
-    .references(() => members.id),
+    .references(() => members.id, actions),
 });
 
 export type Member = InferSelectModel<typeof members>;

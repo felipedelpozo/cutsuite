@@ -1,5 +1,12 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { jsonb, pgEnum, pgTable, text, uuid } from 'drizzle-orm/pg-core';
+import {
+  jsonb,
+  pgEnum,
+  pgTable,
+  ReferenceConfig,
+  text,
+  uuid,
+} from 'drizzle-orm/pg-core';
 
 import { changedAt } from '@/lib/db/utils';
 
@@ -19,10 +26,10 @@ export const services = pgTable('service', {
   ...changedAt(),
 });
 
-export const serviceIdReference = () => ({
+export const serviceIdReference = (actions?: ReferenceConfig['actions']) => ({
   service_id: uuid('service_id')
     .notNull()
-    .references(() => services.id),
+    .references(() => services.id, actions),
 });
 
 export type Service = InferSelectModel<typeof services>;

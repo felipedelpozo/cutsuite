@@ -12,3 +12,5 @@
 - <https://tanstack.com/>
 - <https://nuqs.47ng.com/>
 - <https://github.com/QuantGeekDev/vercel-ai-mcp-client>
+- <https://shadcn-editor.vercel.app/>
+- <https://sdk.vercel.ai/docs/guides/rag-chatbot>

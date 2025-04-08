@@ -58,14 +58,14 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
   const { organizationId } = req.query;
   const body: WebhookPayload = req.body;
 
-  if (body.data.key.remoteJid !== sender) {
+  if (!organizationId || body.data.key.remoteJid !== sender) {
     return res.status(401).send({ error: 'Unauthorized' });
   }
 
   const systemPrompt = `
-          Eres un asistente útil que responde preguntas basadas únicamente en la información proporcionada por el usuario.
-          Si no tienes suficiente información para responder, indica que no lo sabes.
-        `;
+    Eres un asistente útil que responde preguntas basadas únicamente en la información proporcionada por el usuario.
+    Si no tienes suficiente información para responder, indica que no lo sabes.
+  `;
 
   const result = await generateText({
     model: openai('gpt-4o'),
@@ -73,11 +73,13 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     prompt: body.data.message.conversation,
   });
 
-  await sendText({
-    instanceName: body.instance,
-    number: body.data.key.remoteJid,
-    text: result.text,
-  });
+  if (body.data.key.remoteJid && body.data.message.conversation) {
+    await sendText({
+      instanceName: body.instance,
+      number: body.data.key.remoteJid,
+      text: result.text,
+    });
+  }
 
   return res.json({ text: result.text });
 }

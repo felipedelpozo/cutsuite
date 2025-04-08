@@ -1,5 +1,11 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import {
+  boolean,
+  pgTable,
+  ReferenceConfig,
+  text,
+  timestamp,
+} from 'drizzle-orm/pg-core';
 
 import { changedAt } from '@/lib/db/utils';
 
@@ -13,10 +19,10 @@ export const users = pgTable('user', {
   ...changedAt(),
 });
 
-export const userIdReference = () => ({
+export const userIdReference = (actions?: ReferenceConfig['actions']) => ({
   userId: text('user_id')
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, actions),
 });
 
 export type User = InferSelectModel<typeof users>;
