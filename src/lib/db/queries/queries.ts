@@ -1,16 +1,15 @@
 import { headers } from 'next/headers';
 import { desc, eq } from 'drizzle-orm';
 
+import { auth } from '@/lib/auth';
 import db from '@/lib/db';
-
-import { auth } from '../auth';
 import {
   activityLogs,
   members,
   organizations,
   subscriptions,
   users,
-} from './schema';
+} from '@/lib/db/schema';
 
 export async function getOrganization() {
   const session = await auth.api.getSession({

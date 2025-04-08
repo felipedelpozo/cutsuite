@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { openai } from '@ai-sdk/openai';
-import { generateText } from 'ai';
-import { organization } from 'better-auth/plugins';
+import { generateText, tool } from 'ai';
+import { z } from 'zod';
 
+import { findRelevantContent } from '@/lib/db/queries/embeddings';
 import { sendText } from '@/lib/evolution-api';
 import { WebhookPayload } from '@/lib/evolution-api/types';
 
@@ -63,14 +64,24 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const systemPrompt = `
-    Eres un asistente útil que responde preguntas basadas únicamente en la información proporcionada por el usuario.
-    Si no tienes suficiente información para responder, indica que no lo sabes.
+    Eres un asistente útil. Consulta tu base de conocimientos antes de responder cualquier pregunta.
+    Responde solo a las preguntas utilizando la información de las llamadas a herramientas.
+    Si no encuentras información relevante en las llamadas a herramientas, responde: "Lo siento, no lo sé".
   `;
 
   const result = await generateText({
     model: openai('gpt-4o'),
     system: systemPrompt,
     prompt: body.data.message.conversation,
+    tools: {
+      getInformation: tool({
+        description: `get information from your knowledge base to answer questions.`,
+        parameters: z.object({
+          question: z.string().describe('the users question'),
+        }),
+        execute: async ({ question }) => findRelevantContent(question),
+      }),
+    },
   });
 
   if (body.data.key.remoteJid && body.data.message.conversation) {
