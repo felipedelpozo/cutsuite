@@ -11,3 +11,4 @@
 - <https://sdk.vercel.ai/>
 - <https://tanstack.com/>
 - <https://nuqs.47ng.com/>
+- <https://github.com/QuantGeekDev/vercel-ai-mcp-client>

@@ -54,3 +54,50 @@ export type InstanceLogoutResponse = {
     message: string;
   };
 };
+
+export interface WebhookPayload {
+  event: 'messages.upsert';
+  instance: 'Business';
+  data: {
+    key: {
+      remoteJid: string;
+      fromMe: boolean;
+      id: string;
+    };
+    pushName: string;
+    status: string;
+    message: {
+      messageContextInfo: {
+        deviceListMetadata: {
+          senderKeyHash: string;
+          senderTimestamp: string;
+          recipientKeyHash: string;
+          recipientTimestamp: string;
+        };
+        deviceListMetadataVersion: number;
+        messageSecret: string;
+      };
+      conversation: string;
+    };
+    contextInfo: {
+      expiration: number;
+      ephemeralSettingTimestamp: string;
+      entryPointConversionSource: string;
+      entryPointConversionApp: string;
+      entryPointConversionDelaySeconds: number;
+      disappearingMode: {
+        initiator: string;
+        trigger: string;
+      };
+    };
+    messageType: string;
+    messageTimestamp: number;
+    instanceId: string;
+    source: string;
+  };
+  destination: string;
+  date_time: string;
+  sender: string;
+  server_url: string;
+  apikey: string;
+}

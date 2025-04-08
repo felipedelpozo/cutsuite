@@ -10,6 +10,7 @@ const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string().min(1),
     EVOLUTION_API_URL: z.string().url(),
     EVOLUTION_API_KEY: z.string().min(1),
+    OPENAI_API_KEY: z.string().min(1),
   },
   client: {},
   runtimeEnv: {
@@ -20,6 +21,7 @@ const env = createEnv({
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     EVOLUTION_API_URL: process.env.EVOLUTION_API_URL,
     EVOLUTION_API_KEY: process.env.EVOLUTION_API_KEY,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
 });
 

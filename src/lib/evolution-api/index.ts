@@ -48,4 +48,19 @@ export const instanceLogout = async (
   return api.delete<InstanceLogoutResponse>(`/instance/logout/${name}`);
 };
 
+export const sendText = async ({
+  instanceName,
+  number,
+  text,
+}: {
+  instanceName: string;
+  number: string;
+  text: string;
+}): Promise<AxiosResponse<unknown>> => {
+  return api.post<unknown>(`/message/sendText/${instanceName}`, {
+    number,
+    text,
+  });
+};
+
 export default api;
