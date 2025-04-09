@@ -1,6 +1,8 @@
+import { generateEmbeddings } from '@/lib/ai/embedding';
 import db from '@/lib/db';
 import * as schema from '@/lib/db/schema';
 import accounts from '@/lib/db/seed/data/accounts.json';
+import documents from '@/lib/db/seed/data/documents.json';
 import members from '@/lib/db/seed/data/members.json';
 import organizations from '@/lib/db/seed/data/organizations.json';
 import sessions from '@/lib/db/seed/data/sessions.json';
@@ -51,7 +53,12 @@ async function seed() {
       updatedAt: new Date(account.updated_at),
     }))
   );
-  await db.insert(schema.organizations).values(organizations);
+
+  const [organization] = await db
+    .insert(schema.organizations)
+    .values(organizations)
+    .returning();
+
   await db.insert(schema.members).values(
     members.map((member) => ({
       email: member.email,
@@ -65,6 +72,30 @@ async function seed() {
       createdAt: new Date(member.created_at),
       updatedAt: new Date(member.updated_at),
     }))
+  );
+
+  const documentsRecords = await db
+    .insert(schema.documents)
+    .values(
+      documents.map((document) => ({
+        content: document.content,
+        organizationId: organization.id,
+        createdAt: new Date(document.created_at),
+        updatedAt: new Date(document.updated_at),
+      }))
+    )
+    .returning();
+
+  await Promise.all(
+    documentsRecords.map(async (document) => {
+      const embeddings = await generateEmbeddings(document.content);
+      await db.insert(schema.embeddings).values(
+        embeddings.map((embedding) => ({
+          document_id: document.id,
+          ...embedding,
+        }))
+      );
+    })
   );
 }
 
