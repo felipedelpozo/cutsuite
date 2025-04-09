@@ -18,7 +18,7 @@ export const customers = pgTable('customer', {
 });
 
 export const customerIdReference = (actions?: ReferenceConfig['actions']) => ({
-  customer_id: uuid('customer_id')
+  customerId: uuid('customer_id')
     .notNull()
     .references(() => customers.id, actions),
 });

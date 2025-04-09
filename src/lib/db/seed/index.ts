@@ -1,3 +1,5 @@
+import { random } from 'lodash';
+
 import { generateEmbeddings } from '@/lib/ai/embedding';
 import db from '@/lib/db';
 import * as schema from '@/lib/db/schema';
@@ -7,6 +9,7 @@ import members from '@/lib/db/seed/data/members.json';
 import organizations from '@/lib/db/seed/data/organizations.json';
 import sessions from '@/lib/db/seed/data/sessions.json';
 import users from '@/lib/db/seed/data/users.json';
+import { generateCustomer, generateEvent } from '@/lib/db/seed/utils';
 
 async function seed() {
   await db.insert(schema.users).values(
@@ -16,7 +19,7 @@ async function seed() {
       email: user.email,
       emailVerified: user.emailVerified,
       image: user.image,
-      deletedAt: user.deletedAt ? new Date(user.deletedAt) : null,
+      deletedAt: user.deleted_at ? new Date(user.deleted_at) : null,
       createdAt: new Date(user.created_at),
       updatedAt: new Date(user.updated_at),
     }))
@@ -59,19 +62,52 @@ async function seed() {
     .values(organizations)
     .returning();
 
-  await db.insert(schema.members).values(
-    members.map((member) => ({
-      email: member.email,
-      userId: member.user_id,
-      organizationId: member.organization_id,
-      role: member.role as schema.MemberRole,
-      displayName: member.display_name,
-      phoneNumber: member.phone_number,
-      image: member.image,
-      preferences: member.preferences,
-      createdAt: new Date(member.created_at),
-      updatedAt: new Date(member.updated_at),
-    }))
+  const membersRecords = await db
+    .insert(schema.members)
+    .values(
+      members.map((member) => ({
+        email: member.email,
+        userId: member.user_id,
+        organizationId: member.organization_id,
+        role: member.role as schema.MemberRole,
+        displayName: member.display_name,
+        phoneNumber: member.phone_number,
+        image: member.image,
+        preferences: member.preferences,
+        createdAt: new Date(member.created_at),
+        updatedAt: new Date(member.updated_at),
+      }))
+    )
+    .returning();
+
+  const customersRecords = await db
+    .insert(schema.customers)
+    .values(
+      membersRecords
+        .map((member) =>
+          Array.from({ length: random(1, 25) }).map(() =>
+            generateCustomer({
+              organizationId: organization.id,
+              memberId: member.id,
+            })
+          )
+        )
+        .flat()
+    )
+    .returning();
+
+  await db.insert(schema.events).values(
+    customersRecords
+      .map((customer) =>
+        Array.from({ length: random(1, 25) }).map(() =>
+          generateEvent({
+            organizationId: organization.id,
+            memberId: customer.memberId,
+            customerId: customer.id,
+          })
+        )
+      )
+      .flat()
   );
 
   const documentsRecords = await db
@@ -91,7 +127,7 @@ async function seed() {
       const embeddings = await generateEmbeddings(document.content);
       await db.insert(schema.embeddings).values(
         embeddings.map((embedding) => ({
-          document_id: document.id,
+          documentId: document.id,
           ...embedding,
         }))
       );

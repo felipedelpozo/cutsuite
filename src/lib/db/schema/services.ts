@@ -27,7 +27,7 @@ export const services = pgTable('service', {
 });
 
 export const serviceIdReference = (actions?: ReferenceConfig['actions']) => ({
-  service_id: uuid('service_id')
+  serviceId: uuid('service_id')
     .notNull()
     .references(() => services.id, actions),
 });

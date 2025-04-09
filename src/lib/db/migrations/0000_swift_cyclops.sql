@@ -1,6 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS vector
-	WITH SCHEMA public;
-
 CREATE TYPE "public"."type" AS ENUM('SIGN_UP', 'SIGN_IN', 'SIGN_OUT', 'UPDATE_PASSWORD', 'DELETE_ACCOUNT', 'UPDATE_ACCOUNT', 'CREATE_TEAM', 'REMOVE_TEAM_MEMBER', 'INVITE_TEAM_MEMBER', 'ACCEPT_INVITATION');--> statement-breakpoint
 CREATE TYPE "public"."instance_status" AS ENUM('CONNECT', 'CONNECTED', 'DISCONNECTED', 'LOADING');--> statement-breakpoint
 CREATE TYPE "public"."member_role" AS ENUM('ADMIN', 'USER', 'GUEST');--> statement-breakpoint
@@ -164,7 +161,7 @@ CREATE TABLE "user" (
 	"email" text NOT NULL,
 	"emailVerified" boolean NOT NULL,
 	"image" text,
-	"deletedAt" timestamp,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now(),
 	CONSTRAINT "user_email_unique" UNIQUE("email")

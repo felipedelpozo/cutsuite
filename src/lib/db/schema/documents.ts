@@ -12,7 +12,7 @@ export const documents = pgTable('document', {
 });
 
 export const documentIdReference = (actions?: ReferenceConfig['actions']) => ({
-  document_id: uuid('document_id')
+  documentId: uuid('document_id')
     .notNull()
     .references(() => documents.id, actions),
 });

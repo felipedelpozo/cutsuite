@@ -1,4 +1,3 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { openai } from '@ai-sdk/openai';
 import { generateText, tool } from 'ai';
 import { z } from 'zod';
@@ -55,12 +54,20 @@ export const maxDuration = 30;
 //   "apikey": "9FCA4DC163AD-4080-B4E8-CB4618C7C230"
 // }
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  const { organizationId } = req.query;
-  const body: WebhookPayload = req.body;
+export async function POST(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const body: WebhookPayload = await req.json();
 
-  if (!organizationId || body.data.key.remoteJid !== sender) {
-    return res.status(401).send({ error: 'Unauthorized' });
+  if (!id || body.data.key.remoteJid !== sender) {
+    return Response.json(
+      { error: 'Unauthorized' },
+      {
+        status: 401,
+      }
+    );
   }
 
   const systemPrompt = `
@@ -84,6 +91,8 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     },
   });
 
+  console.log('Result text:', result.text);
+
   if (body.data.key.remoteJid && body.data.message.conversation) {
     await sendText({
       instanceName: body.instance,
@@ -92,7 +101,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     });
   }
 
-  return res.json({ text: result.text });
+  return Response.json({ text: result.text });
 }
 
 // {
