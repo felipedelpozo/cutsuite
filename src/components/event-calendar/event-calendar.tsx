@@ -166,9 +166,16 @@ export function EventCalendar({
     const newEvent: CalendarEvent = {
       id: '',
       title: '',
+      description: '',
       start: startTime,
       end: addHoursToDate(startTime, 1),
       allDay: false,
+      color: '#000000',
+      createdAt: null,
+      updatedAt: null,
+      organizationId: '',
+      memberId: '',
+      customerId: '',
     };
     setSelectedEvent(newEvent);
     setIsEventDialogOpen(true);
