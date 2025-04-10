@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/dashboard/app-sidebar';
+import Chat from '@/components/ia/chat';
 import { SiteHeader } from '@/components/site-header';
 
 export const metadata: Metadata = {
@@ -32,6 +33,7 @@ export default function DashboardLayout({
           </div>
         </div>
       </SidebarInset>
+      <Chat />
     </SidebarProvider>
   );
 }

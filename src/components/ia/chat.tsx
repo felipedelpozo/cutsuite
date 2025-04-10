@@ -60,10 +60,10 @@ export default function ChatDrawer() {
         <Button
           variant="outline"
           size="icon"
-          className="fixed right-7 bottom-7 rounded-full p-6"
+          className="data-[state=open]:animate-out fixed right-7 bottom-7 rounded-full bg-gradient-to-b from-green-400 to-blue-400 p-6 data-[state=open]:hidden"
         >
           <Bot className="h-6 w-6" />
-          <BorderBeam size={250} duration={12} delay={9} />
+          <BorderBeam duration={2} size={100} />
         </Button>
       </DrawerTrigger>
       <DrawerContent>

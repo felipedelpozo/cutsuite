@@ -1,5 +1,6 @@
 # Resources
 
+- <https://github.com/origin-space/event-calendar>
 - <https://github.com/Bekacru/nextjs-better-auth-SaaS-stater/blob/main/lib/auth.ts>
 - <https://ui.bazza.dev/docs/data-table-filter>
 - <https://github.com/satnaing/shadcn-admin>
