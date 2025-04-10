@@ -1,4 +1,4 @@
-import Chat from '@/components/dashboard/chat';
+import Chat from '@/components/ia/chat';
 
 export default function Page() {
   return <Chat />;
