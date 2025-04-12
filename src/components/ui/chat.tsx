@@ -33,7 +33,7 @@ interface ChatPropsBase {
     messageId: string,
     rating: 'thumbs-up' | 'thumbs-down'
   ) => void;
-  setMessages?: (messages: any[]) => void;
+  setMessages?: (messages: Message[]) => void;
   transcribeAudio?: (blob: Blob) => Promise<string>;
 }
 
@@ -93,7 +93,7 @@ export function Chat({
             needsUpdate = true;
             return {
               ...toolInvocation,
-              state: 'result',
+              state: 'result' as const,
               result: {
                 content: 'Tool execution was cancelled',
                 __cancelled: true, // Special marker to indicate cancellation
@@ -113,7 +113,7 @@ export function Chat({
     }
 
     if (lastAssistantMessage.parts && lastAssistantMessage.parts.length > 0) {
-      const updatedParts = lastAssistantMessage.parts.map((part: any) => {
+      const updatedParts = lastAssistantMessage.parts.map((part) => {
         if (
           part.type === 'tool-invocation' &&
           part.toolInvocation &&
@@ -124,7 +124,7 @@ export function Chat({
             ...part,
             toolInvocation: {
               ...part.toolInvocation,
-              state: 'result',
+              state: 'result' as const,
               result: {
                 content: 'Tool execution was cancelled',
                 __cancelled: true,
@@ -220,7 +220,6 @@ export function Chat({
           <MessageInput
             value={input}
             onChange={handleInputChange}
-            allowAttachments
             files={files}
             setFiles={setFiles}
             stop={handleStop}
@@ -305,7 +304,7 @@ interface ChatFormProps {
 }
 
 export const ChatForm = forwardRef<HTMLFormElement, ChatFormProps>(
-  ({ children, handleSubmit, isPending, className }, ref) => {
+  ({ children, handleSubmit, className }, ref) => {
     const [files, setFiles] = useState<File[] | null>(null);
 
     const onSubmit = (event: React.FormEvent) => {

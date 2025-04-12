@@ -1,21 +1,16 @@
-import type { SearchParams, Values } from 'nuqs';
+import type { Values } from 'nuqs';
 import {
-  createSearchParamsCache,
+  createLoader,
   createSerializer,
   parseAsIsoDateTime,
 } from 'nuqs/server';
-
-export type PageSearchParams = {
-  searchParams: SearchParams;
-};
 
 export const params = {
   date: parseAsIsoDateTime.withDefault(new Date()),
 };
 
 export const serialize = createSerializer(params);
-export const getSearchParams = async (searchParams: SearchParams) =>
-  createSearchParamsCache(params).parse(searchParams);
+export const loadSearchParams = createLoader(params);
 
 export type Filters = Values<typeof params>;
 export type FilterKeys = keyof typeof params;

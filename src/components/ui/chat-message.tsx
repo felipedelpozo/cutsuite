@@ -108,16 +108,6 @@ interface ReasoningPart {
 
 export type Message = UIMessage;
 
-// export interface Message extends UIMessage {
-//   id: string
-//   role: "user" | "assistant" | "system" | "data"
-//   content: string
-//   createdAt?: Date
-//   experimental_attachments?: Attachment[]
-//   toolInvocations?: ToolInvocation[]
-//   parts?: MessagePart[]
-// }
-
 export interface ChatMessageProps extends Message {
   showTimeStamp?: boolean;
   animation?: Animation;
@@ -217,13 +207,13 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         );
       } else if (part.type === 'reasoning') {
         return <ReasoningBlock key={`reasoning-${index}`} part={part} />;
-      } else if (part.type === 'tool-invocation') {
-        return (
-          <ToolCall
-            key={`tool-${index}`}
-            toolInvocations={[part.toolInvocation]}
-          />
-        );
+        // } else if (part.type === 'tool-invocation') {
+        //   return (
+        //     <ToolCall
+        //       key={`tool-${index}`}
+        //       toolInvocations={[part.toolInvocation]}
+        //     />
+        //   );
       }
       return null;
     });

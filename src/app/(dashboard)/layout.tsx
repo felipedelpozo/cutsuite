@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import Chat from '@/components/ai/chat';
 import { AppSidebar } from '@/components/dashboard/app-sidebar';
-import Chat from '@/components/ia/chat';
 import { SiteHeader } from '@/components/site-header';
 
 export const metadata: Metadata = {

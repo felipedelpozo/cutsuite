@@ -16,3 +16,12 @@
 - <https://shadcn-editor.vercel.app/>
 - <https://sdk.vercel.ai/docs/guides/rag-chatbot>
 - <https://sdk.vercel.ai/cookbook/next/mcp-tools>
+- <https://originui.com/>
+- <https://www.reactbits.dev/>
+- <https://blocks.so/>
+- <https://www.prompt-kit.com/>
+- <https://github.com/origin-space/event-calendar>
+- <https://sdk.vercel.ai/>
+- <https://github.com/vercel/ai-chatbot>
+- <https://magicui.design/>
+- <https://github.com/ibelick/zola>

@@ -13,7 +13,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import Overlay from '@/components/ia/overlay';
+import Overlay from '@/components/ai/overlay';
 
 import { BorderBeam } from '../ui/border-beam';
 import { Chat } from '../ui/chat';
@@ -51,7 +51,7 @@ function DrawerContent({
 }
 
 export default function ChatDrawer() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
+  const { messages, input, handleInputChange, handleSubmit, stop, status } =
     useChat();
 
   return (
@@ -76,7 +76,7 @@ export default function ChatDrawer() {
             input={input}
             handleInputChange={handleInputChange}
             handleSubmit={handleSubmit}
-            isGenerating={isLoading}
+            isGenerating={status !== 'ready'}
             stop={stop}
           />
         </div>

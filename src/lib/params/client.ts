@@ -6,9 +6,7 @@ export const params = {
 
 export const serialize = createSerializer(params);
 
-export const slugParsers = params;
-
-export type SearchParams = Record<string, string | string[] | undefined>;
+export const loadSearchParams = params;
 
 export type Filters = Values<typeof params>;
 export type FilterKeys = keyof typeof params;

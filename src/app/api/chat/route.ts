@@ -1,38 +1,47 @@
+import { headers } from 'next/headers';
 import { openai } from '@ai-sdk/openai';
-import { streamText, tool } from 'ai';
-import { z } from 'zod';
+import { smoothStream, streamText, UIMessage } from 'ai';
 
-import { findRelevantContent } from '@/lib/db/queries';
+import { systemPrompt } from '@/lib/ai/prompts';
+import { getInformation } from '@/lib/ai/tools/get-information';
+import { auth } from '@/lib/auth';
+import { generateUUID } from '@/lib/utils';
 
 export const maxDuration = 30;
 
-export async function POST(req: Request) {
-  const { messages } = await req.json();
+export async function POST(request: Request) {
+  const {
+    id,
+    messages,
+    selectedChatModel,
+  }: {
+    id: string;
+    messages: Array<UIMessage>;
+    selectedChatModel: string;
+  } = await request.json();
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session || !session.user || !session.user.id) {
+    return new Response('Unauthorized', { status: 401 });
+  }
 
   const result = streamText({
     model: openai('gpt-4o'),
-    system: `You are a helpful assistant. Check your knowledge base before answering any questions.
-    Only respond to questions using information from tool calls.
-    if no relevant information is found in the tool calls, respond, "Sorry, I don't know."`,
+    maxSteps: 5,
+    system: systemPrompt({ selectedChatModel }),
     messages,
+    experimental_activeTools:
+      selectedChatModel === 'chat-model-reasoning' ? [] : ['getInformation'],
+    experimental_transform: smoothStream({ chunking: 'word' }),
+    experimental_generateMessageId: generateUUID,
     tools: {
-      //   addResource: tool({
-      //     description: `add a resource to your knowledge base.
-      //       If the user provides a random piece of knowledge unprompted, use this tool without asking for confirmation.`,
-      //     parameters: z.object({
-      //       content: z
-      //         .string()
-      //         .describe('the content or resource to add to the knowledge base'),
-      //     }),
-      //     execute: async ({ content }) => createResource({ content }),
-      //   }),
-      getInformation: tool({
-        description: `get information from your knowledge base to answer questions.`,
-        parameters: z.object({
-          question: z.string().describe('the users question'),
-        }),
-        execute: async ({ question }) => findRelevantContent(question),
-      }),
+      getInformation,
+    },
+    onFinish: async ({ response }) => {
+      console.log({ id, response });
     },
   });
 
