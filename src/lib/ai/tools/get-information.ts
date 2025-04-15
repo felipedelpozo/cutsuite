@@ -8,11 +8,5 @@ export const getInformation = tool({
   parameters: z.object({
     question: z.string().describe('the users question'),
   }),
-  execute: async ({ question }) => {
-    const response = await findRelevantContent(question);
-
-    console.log({ response });
-
-    return response;
-  },
+  execute: async ({ question }) => findRelevantContent(question),
 });

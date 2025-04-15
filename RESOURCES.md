@@ -25,3 +25,4 @@
 - <https://github.com/vercel/ai-chatbot>
 - <https://magicui.design/>
 - <https://github.com/ibelick/zola>
+- <https://dribbble.com/shots/25829792-Zendenta-Showcase-SaaS-Dental-Clinic-Management-System>
