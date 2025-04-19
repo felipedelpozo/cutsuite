@@ -1,38 +1,31 @@
-'use client';
+import { PageSearchParams } from '@/types';
 
-import { useState } from 'react';
+import { getOrganization } from '@/lib/db/queries';
+import { findEventsMonth } from '@/lib/db/queries/events';
+import { loadSearchParams } from '@/lib/params/server';
+import { EventCalendar } from '@/components/event-calendar/event-calendar';
+import { PageContainer } from '@/components/page-container';
+import { SiteHeader } from '@/components/site-header';
 
-import { sampleEvents } from '@/components/dashboard/sample-events';
-import { EventCalendar, type CalendarEvent } from '@/components/event-calendar';
+type PageProps = PageSearchParams;
 
-export default function Home() {
-  const [events, setEvents] = useState<CalendarEvent[]>(sampleEvents);
+export default async function CalendarPage({ searchParams }: PageProps) {
+  const organization = await getOrganization();
+  const props = await loadSearchParams(searchParams);
 
-  const handleEventAdd = (event: CalendarEvent) => {
-    setEvents([...events, event]);
-  };
-
-  const handleEventUpdate = (updatedEvent: CalendarEvent) => {
-    setEvents(
-      events.map((event) =>
-        event.id === updatedEvent.id ? updatedEvent : event
-      )
-    );
-  };
-
-  const handleEventDelete = (eventId: string) => {
-    setEvents(events.filter((event) => event.id !== eventId));
-  };
+  const events = await findEventsMonth({
+    organizationId: organization.id,
+    date: props.date,
+  });
 
   return (
-    <div className="flex flex-col p-1 sm:p-4">
-      <EventCalendar
-        events={events}
-        onEventAdd={handleEventAdd}
-        onEventUpdate={handleEventUpdate}
-        onEventDelete={handleEventDelete}
-        initialView="day"
-      />
-    </div>
+    <>
+      <SiteHeader>
+        <h1 className="text-base font-medium">Calendar</h1>
+      </SiteHeader>
+      <PageContainer>
+        <EventCalendar events={events} />
+      </PageContainer>
+    </>
   );
 }

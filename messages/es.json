@@ -1,7 +1,8 @@
 {
   "HomePage": {
     "title": "Welcome",
-    "goDashboard": "Go to Dashboard"
+    "goDashboard": "Go to Dashboard",
+    "goSignIn": "Sign In"
   },
   "ErrorPage": {
     "404": {

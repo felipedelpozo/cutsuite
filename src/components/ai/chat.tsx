@@ -13,8 +13,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import Overlay from '@/components/ai/overlay';
 
+import { BubbleBackground } from '../animate-ui/bubble-background';
 import { BorderBeam } from '../ui/border-beam';
 import { Chat } from '../ui/chat';
 
@@ -30,7 +30,7 @@ function DrawerContent({
         className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-white/50 dark:bg-gray-800/80"
         {...props}
       >
-        <Overlay />
+        <BubbleBackground />
       </DrawerPrimitive.Overlay>
       <DrawerPrimitive.Content
         data-slot="drawer-content"

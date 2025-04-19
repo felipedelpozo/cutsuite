@@ -34,10 +34,10 @@ export async function POST(request: Request) {
     maxSteps: 5,
     system: systemPrompt({ selectedChatModel }),
     messages,
-    experimental_activeTools:
-      selectedChatModel === 'chat-model-reasoning'
-        ? []
-        : ['getInformation', 'getEvents'],
+    // experimental_activeTools:
+    //   selectedChatModel === 'chat-model-reasoning'
+    //     ? []
+    //     : ['getInformation', 'getEvents'],
     experimental_transform: smoothStream({ chunking: 'word' }),
     experimental_generateMessageId: generateUUID,
     tools: {

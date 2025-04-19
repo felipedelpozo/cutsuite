@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import Chat from '@/components/ai/chat';
 import { AppSidebar } from '@/components/dashboard/app-sidebar';
-import { SiteHeader } from '@/components/site-header';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -25,15 +23,7 @@ export default function DashboardLayout({
       }
     >
       <AppSidebar variant="inset" />
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            {children}
-          </div>
-        </div>
-      </SidebarInset>
-      <Chat />
+      <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
   );
 }
