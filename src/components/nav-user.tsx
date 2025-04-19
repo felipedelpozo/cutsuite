@@ -26,6 +26,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function NavUser() {
   const router = useRouter();
@@ -34,7 +35,15 @@ export function NavUser() {
   const { data: session } = useSession();
 
   if (!session) {
-    return null;
+    return (
+      <div className="flex items-center space-x-2 p-2">
+        <Skeleton className="h-8 w-8 rounded-lg" />
+        <div className="space-y-2">
+          <Skeleton className="h-2 w-[110px]" />
+          <Skeleton className="h-2 w-[140px]" />
+        </div>
+      </div>
+    );
   }
 
   return (
