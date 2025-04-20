@@ -27,3 +27,4 @@
 - <https://github.com/ibelick/zola>
 - <https://dribbble.com/shots/25829792-Zendenta-Showcase-SaaS-Dental-Clinic-Management-System>
 - <https://animate-ui.com/>
+- <https://orm.drizzle.team/docs/seed-overview>

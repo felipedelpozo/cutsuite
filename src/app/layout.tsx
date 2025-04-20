@@ -8,6 +8,8 @@ import { ThemeProvider } from '@/components/theme-provider';
 
 import './globals.css';
 
+import { TailwindIndicator } from '@/components/tailwind-indicator';
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -43,6 +45,7 @@ export default async function RootLayout({
         >
           <NextIntlClientProvider>{children}</NextIntlClientProvider>
           <Toaster />
+          <TailwindIndicator />
         </ThemeProvider>
       </body>
     </html>

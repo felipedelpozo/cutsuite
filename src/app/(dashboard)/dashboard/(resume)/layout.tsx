@@ -1,3 +1,6 @@
+import { PageContainer } from '@/components/page-container';
+import { SiteHeader } from '@/components/site-header';
+
 export default function DashboardResumeLayout({
   children,
   schedule,
@@ -6,9 +9,14 @@ export default function DashboardResumeLayout({
   schedule: React.ReactNode;
 }) {
   return (
-    <div className="@container sm:w-full sm:p-4">
-      {schedule}
-      {children}
-    </div>
+    <>
+      <SiteHeader>
+        <h1 className="text-base font-medium">Calendar</h1>
+      </SiteHeader>
+      <PageContainer>
+        {schedule}
+        {children}
+      </PageContainer>
+    </>
   );
 }
