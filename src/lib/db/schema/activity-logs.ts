@@ -37,11 +37,11 @@ export enum ActivityType {
   ACCEPT_INVITATION = 'ACCEPT_INVITATION',
 }
 
-export const activityLogs = pgTable('activity_logs', {
+export const activityLogs = pgTable('activityLogs', {
   id: serial('id').primaryKey(),
   type: activityTypeEnum('role'),
   timestamp: timestamp('timestamp').notNull().defaultNow(),
-  ipAddress: varchar('ip_address', { length: 45 }),
+  ipAddress: varchar('ipAddress', { length: 45 }),
   ...userIdReference(),
   ...organizationIdReference(),
 });

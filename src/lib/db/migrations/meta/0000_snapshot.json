@@ -1,5 +1,5 @@
 {
-  "id": "52f44f22-c7a2-4ad7-9212-e4c4a142ce39",
+  "id": "4c5e44b2-ae61-4e5e-9d97-883a0a12cf77",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -80,15 +80,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -113,8 +113,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.activity_logs": {
-      "name": "activity_logs",
+    "public.activityLogs": {
+      "name": "activityLogs",
       "schema": "",
       "columns": {
         "id": {
@@ -137,8 +137,8 @@
           "notNull": true,
           "default": "now()"
         },
-        "ip_address": {
-          "name": "ip_address",
+        "ipAddress": {
+          "name": "ipAddress",
           "type": "varchar(45)",
           "primaryKey": false,
           "notNull": false
@@ -149,8 +149,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "organization_id": {
-          "name": "organization_id",
+        "organizationId": {
+          "name": "organizationId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -158,20 +158,83 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "activity_logs_user_id_user_id_fk": {
-          "name": "activity_logs_user_id_user_id_fk",
-          "tableFrom": "activity_logs",
+        "activityLogs_user_id_user_id_fk": {
+          "name": "activityLogs_user_id_user_id_fk",
+          "tableFrom": "activityLogs",
           "tableTo": "user",
           "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "activity_logs_organization_id_organization_id_fk": {
-          "name": "activity_logs_organization_id_organization_id_fk",
-          "tableFrom": "activity_logs",
+        "activityLogs_organizationId_organization_id_fk": {
+          "name": "activityLogs_organizationId_organization_id_fk",
+          "tableFrom": "activityLogs",
           "tableTo": "organization",
-          "columnsFrom": ["organization_id"],
+          "columnsFrom": ["organizationId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.chat": {
+      "name": "chat",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "visibility": {
+          "name": "visibility",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'private'"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "chat_user_id_user_id_fk": {
+          "name": "chat_user_id_user_id_fk",
+          "tableFrom": "chat",
+          "tableTo": "user",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -200,8 +263,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "display_name": {
-          "name": "display_name",
+        "displayName": {
+          "name": "displayName",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -212,8 +275,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "phone_number": {
-          "name": "phone_number",
+        "phoneNumber": {
+          "name": "phoneNumber",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -224,27 +287,27 @@
           "primaryKey": false,
           "notNull": false
         },
-        "member_id": {
-          "name": "member_id",
+        "memberId": {
+          "name": "memberId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "organization_id": {
-          "name": "organization_id",
+        "organizationId": {
+          "name": "organizationId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -253,20 +316,20 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "customer_member_id_member_id_fk": {
-          "name": "customer_member_id_member_id_fk",
+        "customer_memberId_member_id_fk": {
+          "name": "customer_memberId_member_id_fk",
           "tableFrom": "customer",
           "tableTo": "member",
-          "columnsFrom": ["member_id"],
+          "columnsFrom": ["memberId"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "customer_organization_id_organization_id_fk": {
-          "name": "customer_organization_id_organization_id_fk",
+        "customer_organizationId_organization_id_fk": {
+          "name": "customer_organizationId_organization_id_fk",
           "tableFrom": "customer",
           "tableTo": "organization",
-          "columnsFrom": ["organization_id"],
+          "columnsFrom": ["organizationId"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -285,9 +348,21 @@
         "id": {
           "name": "id",
           "type": "uuid",
-          "primaryKey": true,
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "text": {
+          "name": "text",
+          "type": "varchar",
+          "primaryKey": false,
           "notNull": true,
-          "default": "gen_random_uuid()"
+          "default": "'text'"
         },
         "content": {
           "name": "content",
@@ -295,21 +370,21 @@
           "primaryKey": false,
           "notNull": true
         },
-        "organization_id": {
-          "name": "organization_id",
+        "organizationId": {
+          "name": "organizationId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -318,17 +393,22 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "document_organization_id_organization_id_fk": {
-          "name": "document_organization_id_organization_id_fk",
+        "document_organizationId_organization_id_fk": {
+          "name": "document_organizationId_organization_id_fk",
           "tableFrom": "document",
           "tableTo": "organization",
-          "columnsFrom": ["organization_id"],
+          "columnsFrom": ["organizationId"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "document_id_createdAt_pk": {
+          "name": "document_id_createdAt_pk",
+          "columns": ["id", "createdAt"]
+        }
+      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -357,21 +437,27 @@
           "primaryKey": false,
           "notNull": true
         },
-        "document_id": {
-          "name": "document_id",
+        "documentId": {
+          "name": "documentId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "documentCreatedAt": {
+          "name": "documentCreatedAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -397,13 +483,13 @@
         }
       },
       "foreignKeys": {
-        "embedding_document_id_document_id_fk": {
-          "name": "embedding_document_id_document_id_fk",
+        "embedding_documentId_documentCreatedAt_document_id_createdAt_fk": {
+          "name": "embedding_documentId_documentCreatedAt_document_id_createdAt_fk",
           "tableFrom": "embedding",
           "tableTo": "document",
-          "columnsFrom": ["document_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
+          "columnsFrom": ["documentId", "documentCreatedAt"],
+          "columnsTo": ["id", "createdAt"],
+          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
@@ -461,33 +547,33 @@
           "primaryKey": false,
           "notNull": true
         },
-        "organization_id": {
-          "name": "organization_id",
+        "organizationId": {
+          "name": "organizationId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "member_id": {
-          "name": "member_id",
+        "memberId": {
+          "name": "memberId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "customer_id": {
-          "name": "customer_id",
+        "customerId": {
+          "name": "customerId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -496,29 +582,29 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "event_organization_id_organization_id_fk": {
-          "name": "event_organization_id_organization_id_fk",
+        "event_organizationId_organization_id_fk": {
+          "name": "event_organizationId_organization_id_fk",
           "tableFrom": "event",
           "tableTo": "organization",
-          "columnsFrom": ["organization_id"],
+          "columnsFrom": ["organizationId"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "event_member_id_member_id_fk": {
-          "name": "event_member_id_member_id_fk",
+        "event_memberId_member_id_fk": {
+          "name": "event_memberId_member_id_fk",
           "tableFrom": "event",
           "tableTo": "member",
-          "columnsFrom": ["member_id"],
+          "columnsFrom": ["memberId"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "event_customer_id_customer_id_fk": {
-          "name": "event_customer_id_customer_id_fk",
+        "event_customerId_customer_id_fk": {
+          "name": "event_customerId_customer_id_fk",
           "tableFrom": "event",
           "tableTo": "customer",
-          "columnsFrom": ["customer_id"],
+          "columnsFrom": ["customerId"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -554,27 +640,27 @@
           "notNull": false,
           "default": "'DISCONNECTED'"
         },
-        "service_id": {
-          "name": "service_id",
+        "serviceId": {
+          "name": "serviceId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "organization_id": {
-          "name": "organization_id",
+        "organizationId": {
+          "name": "organizationId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -583,20 +669,20 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "instance_service_id_service_id_fk": {
-          "name": "instance_service_id_service_id_fk",
+        "instance_serviceId_service_id_fk": {
+          "name": "instance_serviceId_service_id_fk",
           "tableFrom": "instance",
           "tableTo": "service",
-          "columnsFrom": ["service_id"],
+          "columnsFrom": ["serviceId"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "instance_organization_id_organization_id_fk": {
-          "name": "instance_organization_id_organization_id_fk",
+        "instance_organizationId_organization_id_fk": {
+          "name": "instance_organizationId_organization_id_fk",
           "tableFrom": "instance",
           "tableTo": "organization",
-          "columnsFrom": ["organization_id"],
+          "columnsFrom": ["organizationId"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -645,8 +731,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "organization_id": {
-          "name": "organization_id",
+        "organizationId": {
+          "name": "organizationId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -657,15 +743,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -683,11 +769,11 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "invitation_organization_id_organization_id_fk": {
-          "name": "invitation_organization_id_organization_id_fk",
+        "invitation_organizationId_organization_id_fk": {
+          "name": "invitation_organizationId_organization_id_fk",
           "tableFrom": "invitation",
           "tableTo": "organization",
-          "columnsFrom": ["organization_id"],
+          "columnsFrom": ["organizationId"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -724,14 +810,14 @@
           "notNull": false,
           "default": "'GUEST'"
         },
-        "display_name": {
-          "name": "display_name",
+        "displayName": {
+          "name": "displayName",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "phone_number": {
-          "name": "phone_number",
+        "phoneNumber": {
+          "name": "phoneNumber",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -755,21 +841,21 @@
           "primaryKey": false,
           "notNull": true
         },
-        "organization_id": {
-          "name": "organization_id",
+        "organizationId": {
+          "name": "organizationId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -787,13 +873,81 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "member_organization_id_organization_id_fk": {
-          "name": "member_organization_id_organization_id_fk",
+        "member_organizationId_organization_id_fk": {
+          "name": "member_organizationId_organization_id_fk",
           "tableFrom": "member",
           "tableTo": "organization",
-          "columnsFrom": ["organization_id"],
+          "columnsFrom": ["organizationId"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.message": {
+      "name": "message",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "parts": {
+          "name": "parts",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "attachments": {
+          "name": "attachments",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "chatId": {
+          "name": "chatId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "message_chatId_chat_id_fk": {
+          "name": "message_chatId_chat_id_fk",
+          "tableFrom": "message",
+          "tableTo": "chat",
+          "columnsFrom": ["chatId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
@@ -838,15 +992,15 @@
           "primaryKey": false,
           "notNull": false
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -905,15 +1059,15 @@
           "notNull": true,
           "default": "'{}'"
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -950,20 +1104,20 @@
           "primaryKey": false,
           "notNull": true
         },
-        "ip_address": {
-          "name": "ip_address",
+        "ipAddress": {
+          "name": "ipAddress",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "user_agent": {
-          "name": "user_agent",
+        "userAgent": {
+          "name": "userAgent",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "expires_at": {
-          "name": "expires_at",
+        "expiresAt": {
+          "name": "expiresAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
@@ -974,15 +1128,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -1009,6 +1163,88 @@
           "columns": ["token"]
         }
       },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.suggestion": {
+      "name": "suggestion",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "originalText": {
+          "name": "originalText",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "suggestedText": {
+          "name": "suggestedText",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isResolved": {
+          "name": "isResolved",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "documentId": {
+          "name": "documentId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "documentCreatedAt": {
+          "name": "documentCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "suggestion_user_id_user_id_fk": {
+          "name": "suggestion_user_id_user_id_fk",
+          "tableFrom": "suggestion",
+          "tableTo": "user",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "suggestion_documentId_documentCreatedAt_document_id_createdAt_fk": {
+          "name": "suggestion_documentId_documentCreatedAt_document_id_createdAt_fk",
+          "tableFrom": "suggestion",
+          "tableTo": "document",
+          "columnsFrom": ["documentId", "documentCreatedAt"],
+          "columnsTo": ["id", "createdAt"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -1054,21 +1290,21 @@
           "primaryKey": false,
           "notNull": true
         },
-        "organization_id": {
-          "name": "organization_id",
+        "organizationId": {
+          "name": "organizationId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -1077,11 +1313,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "subscription_organization_id_organization_id_fk": {
-          "name": "subscription_organization_id_organization_id_fk",
+        "subscription_organizationId_organization_id_fk": {
+          "name": "subscription_organizationId_organization_id_fk",
           "tableFrom": "subscription",
           "tableTo": "organization",
-          "columnsFrom": ["organization_id"],
+          "columnsFrom": ["organizationId"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -1127,21 +1363,21 @@
           "primaryKey": false,
           "notNull": false
         },
-        "deleted_at": {
-          "name": "deleted_at",
+        "deletedAt": {
+          "name": "deletedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -1184,21 +1420,21 @@
           "primaryKey": false,
           "notNull": true
         },
-        "expires_at": {
-          "name": "expires_at",
+        "expiresAt": {
+          "name": "expiresAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -1208,6 +1444,75 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.vote": {
+      "name": "vote",
+      "schema": "",
+      "columns": {
+        "isUpvoted": {
+          "name": "isUpvoted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "chatId": {
+          "name": "chatId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "messageId": {
+          "name": "messageId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "vote_chatId_chat_id_fk": {
+          "name": "vote_chatId_chat_id_fk",
+          "tableFrom": "vote",
+          "tableTo": "chat",
+          "columnsFrom": ["chatId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "vote_messageId_message_id_fk": {
+          "name": "vote_messageId_message_id_fk",
+          "tableFrom": "vote",
+          "tableTo": "message",
+          "columnsFrom": ["messageId"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "vote_chatId_messageId_pk": {
+          "name": "vote_chatId_messageId_pk",
+          "columns": ["chatId", "messageId"]
+        }
+      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},

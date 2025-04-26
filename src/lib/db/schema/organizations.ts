@@ -15,7 +15,7 @@ export const organizations = pgTable('organization', {
 export const organizationIdReference = (
   actions?: ReferenceConfig['actions']
 ) => ({
-  organizationId: uuid('organization_id')
+  organizationId: uuid('organizationId')
     .notNull()
     .references(() => organizations.id, actions),
 });

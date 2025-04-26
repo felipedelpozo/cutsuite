@@ -23,11 +23,9 @@ export function Chat() {
   const { messages, input, handleInputChange, handleSubmit, stop, status } =
     useChat();
 
-  const chatContainerRef = useRef<HTMLDivElement>(null);
-
   return (
-    <>
-      <ChatContainer className="flex-1 space-y-4 p-4" ref={chatContainerRef}>
+    <div className="grid h-full grid-cols-12 grid-rows-2 gap-2">
+      <div className="col-span-12">
         {messages.map((message) => {
           const isAssistant = message.role === 'assistant';
 
@@ -59,7 +57,7 @@ export function Chat() {
             </Message>
           );
         })}
-      </ChatContainer>
+      </div>
       <PromptInput
         value={input}
         onValueChange={(value) =>
@@ -69,7 +67,7 @@ export function Chat() {
         }
         isLoading={status !== 'ready'}
         onSubmit={handleSubmit}
-        className="w-full max-w-(--breakpoint-md)"
+        className="col-span-12 row-auto max-w-(--breakpoint-md)"
       >
         <PromptInputTextarea placeholder="Ask me anything..." />
         <PromptInputActions className="justify-end pt-2">
@@ -91,6 +89,6 @@ export function Chat() {
           </PromptInputAction>
         </PromptInputActions>
       </PromptInput>
-    </>
+    </div>
   );
 }

@@ -9,7 +9,7 @@ export default function DashboardResumeLayout({
   schedule: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="h-full overflow-hidden">
       <SiteHeader>
         <h1 className="text-base font-medium">Calendar</h1>
       </SiteHeader>
@@ -17,6 +17,6 @@ export default function DashboardResumeLayout({
         {schedule}
         {children}
       </PageContainer>
-    </>
+    </div>
   );
 }

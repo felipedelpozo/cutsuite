@@ -15,7 +15,7 @@ export const users = pgTable('user', {
   email: text('email').notNull().unique(),
   emailVerified: boolean('emailVerified').notNull(),
   image: text('image'),
-  deletedAt: timestamp('deleted_at'),
+  deletedAt: timestamp('deletedAt'),
   ...changedAt(),
 });
 

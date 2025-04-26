@@ -24,8 +24,8 @@ export const members = pgTable('member', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   email: text('email').notNull(),
   role: memberRoleEnum('role').default(MemberRole.GUEST),
-  displayName: text('display_name'),
-  phoneNumber: text('phone_number'),
+  displayName: text('displayName'),
+  phoneNumber: text('phoneNumber'),
   image: text('image'),
   preferences: jsonb('preferences').notNull().default('{}'),
   ...userIdReference(),
@@ -34,7 +34,7 @@ export const members = pgTable('member', {
 });
 
 export const memberIdReference = (actions?: ReferenceConfig['actions']) => ({
-  memberId: uuid('member_id')
+  memberId: uuid('memberId')
     .notNull()
     .references(() => members.id, actions),
 });

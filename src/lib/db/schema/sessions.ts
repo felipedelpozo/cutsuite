@@ -7,9 +7,9 @@ import { changedAt } from '@/lib/db/utils';
 export const sessions = pgTable('session', {
   id: text('id').primaryKey(),
   token: text('token').notNull().unique(),
-  ipAddress: text('ip_address'),
-  userAgent: text('user_agent'),
-  expiresAt: timestamp('expires_at').notNull(),
+  ipAddress: text('ipAddress'),
+  userAgent: text('userAgent'),
+  expiresAt: timestamp('expiresAt').notNull(),
   ...userIdReference(),
   ...changedAt(),
 });
