@@ -1,14 +1,17 @@
 import { headers } from 'next/headers';
-import { desc, eq } from 'drizzle-orm';
+import { and, desc, eq, gte, inArray } from 'drizzle-orm';
 
 import { auth } from '@/lib/auth';
 import db from '@/lib/db';
 import {
   activityLogs,
+  chats,
   members,
+  messages,
   organizations,
   subscriptions,
   users,
+  votes,
 } from '@/lib/db/schema';
 
 export async function getOrganization() {
@@ -121,4 +124,69 @@ export async function getTeamForUser(userId: string) {
   });
 
   return result?.members[0]?.team || null;
+}
+
+export async function deleteMessagesByChatIdAfterTimestamp({
+  chatId,
+  timestamp,
+}: {
+  chatId: string;
+  timestamp: Date;
+}) {
+  try {
+    const messagesToDelete = await db
+      .select({ id: messages.id })
+      .from(messages)
+      .where(
+        and(eq(messages.chatId, chatId), gte(messages.createdAt, timestamp))
+      );
+
+    const messageIds = messagesToDelete.map((message) => message.id);
+
+    if (messageIds.length > 0) {
+      await db
+        .delete(votes)
+        .where(
+          and(eq(votes.chatId, chatId), inArray(votes.messageId, messageIds))
+        );
+
+      return await db
+        .delete(messages)
+        .where(
+          and(eq(messages.chatId, chatId), inArray(messages.id, messageIds))
+        );
+    }
+  } catch (error) {
+    console.error(
+      'Failed to delete messages by id after timestamp from database'
+    );
+    throw error;
+  }
+}
+
+export async function getMessageById({ id }: { id: string }) {
+  try {
+    return await db.select().from(messages).where(eq(messages.id, id));
+  } catch (error) {
+    console.error('Failed to get message by id from database');
+    throw error;
+  }
+}
+
+export async function updateChatVisiblityById({
+  chatId,
+  visibility,
+}: {
+  chatId: string;
+  visibility: 'private' | 'public';
+}) {
+  try {
+    return await db
+      .update(chats)
+      .set({ visibility })
+      .where(eq(chats.id, chatId));
+  } catch (error) {
+    console.error('Failed to update chat visibility in database');
+    throw error;
+  }
 }

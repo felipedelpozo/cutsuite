@@ -8,9 +8,9 @@ import { changedAt } from '@/lib/db/utils';
 export const customers = pgTable('customer', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   name: text('name'),
-  displayName: text('display_name'),
+  displayName: text('displayName'),
   email: text('email').notNull(),
-  phoneNumber: text('phone_number'),
+  phoneNumber: text('phoneNumber'),
   image: text('image'),
   ...memberIdReference(),
   ...organizationIdReference({ onDelete: 'cascade' }),
@@ -18,7 +18,7 @@ export const customers = pgTable('customer', {
 });
 
 export const customerIdReference = (actions?: ReferenceConfig['actions']) => ({
-  customerId: uuid('customer_id')
+  customerId: uuid('customerId')
     .notNull()
     .references(() => customers.id, actions),
 });
