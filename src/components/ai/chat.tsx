@@ -1,96 +1,54 @@
 'use client';
 
-import { useRef } from 'react';
 import { useChat } from '@ai-sdk/react';
-import { ArrowUp, Square } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { ChatContainer } from '@/components/ui/chat-container';
-import { Markdown } from '@/components/ui/markdown';
-import {
-  Message,
-  MessageAvatar,
-  MessageContent,
-} from '@/components/ui/message';
-import {
-  PromptInput,
-  PromptInputAction,
-  PromptInputActions,
-  PromptInputTextarea,
-} from '@/components/ui/prompt-input';
+import { Messages } from '@/components/ai/messages';
 
-export function Chat() {
-  const { messages, input, handleInputChange, handleSubmit, stop, status } =
-    useChat();
+import { MultimodalInput } from './multimodal-input';
 
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+export function Chat({ id, isReadonly }: { id: string; isReadonly: boolean }) {
+  const {
+    messages,
+    setMessages,
+    handleSubmit,
+    input,
+    setInput,
+    append,
+    status,
+    stop,
+    reload,
+  } = useChat();
+
+  console.log({ messages, status });
 
   return (
     <>
-      <ChatContainer className="flex-1 space-y-4 p-4" ref={chatContainerRef}>
-        {messages.map((message) => {
-          const isAssistant = message.role === 'assistant';
+      <div className="bg-background flex h-full min-w-0 flex-col">
+        <Messages
+          chatId={id}
+          status={status}
+          messages={messages}
+          setMessages={setMessages}
+          reload={reload}
+          isReadonly={isReadonly}
+        />
 
-          return (
-            <Message
-              key={message.id}
-              className={
-                message.role === 'user' ? 'justify-end' : 'justify-start'
-              }
-            >
-              {isAssistant && (
-                <MessageAvatar
-                  src="/avatars/ai.png"
-                  alt="AI Assistant"
-                  fallback="AI"
-                />
-              )}
-              <div className="max-w-[85%] flex-1 sm:max-w-[75%]">
-                {isAssistant ? (
-                  <div className="bg-secondary text-foreground prose rounded-lg p-2">
-                    <Markdown>{message.content}</Markdown>
-                  </div>
-                ) : (
-                  <MessageContent className="bg-primary text-primary-foreground">
-                    {message.content}
-                  </MessageContent>
-                )}
-              </div>
-            </Message>
-          );
-        })}
-      </ChatContainer>
-      <PromptInput
-        value={input}
-        onValueChange={(value) =>
-          handleInputChange({
-            target: { value },
-          } as React.ChangeEvent<HTMLInputElement>)
-        }
-        isLoading={status !== 'ready'}
-        onSubmit={handleSubmit}
-        className="w-full max-w-(--breakpoint-md)"
-      >
-        <PromptInputTextarea placeholder="Ask me anything..." />
-        <PromptInputActions className="justify-end pt-2">
-          <PromptInputAction
-            tooltip={status !== 'ready' ? 'Stop generation' : 'Send message'}
-          >
-            <Button
-              variant="default"
-              size="icon"
-              className="h-8 w-8 rounded-full"
-              onClick={handleSubmit}
-            >
-              {status !== 'ready' ? (
-                <Square className="size-5 fill-current" />
-              ) : (
-                <ArrowUp className="size-5" />
-              )}
-            </Button>
-          </PromptInputAction>
-        </PromptInputActions>
-      </PromptInput>
+        <form className="bg-background mx-auto flex w-full gap-2 px-4 pb-4 md:max-w-3xl md:pb-6">
+          {!isReadonly && (
+            <MultimodalInput
+              chatId={id}
+              input={input}
+              setInput={setInput}
+              handleSubmit={handleSubmit}
+              status={status}
+              stop={stop}
+              messages={messages}
+              setMessages={setMessages}
+              append={append}
+            />
+          )}
+        </form>
+      </div>
     </>
   );
 }
