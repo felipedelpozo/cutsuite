@@ -56,7 +56,7 @@ export async function updateOrganizationSubscription(
       ...subscriptionData,
       updatedAt: new Date(),
     })
-    .where(eq(organizations.id, organizationId));
+    .where(eq(subscriptions.organizationId, organizationId));
 }
 
 export async function getUserWithTeam(userId: string) {
