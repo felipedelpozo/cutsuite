@@ -26,4 +26,4 @@ export const messageIdReference = (actions?: ReferenceConfig['actions']) => ({
 });
 
 export type Message = InferSelectModel<typeof messages>;
-export type NewMesage = InferInsertModel<typeof messages>;
+export type NewMessage = InferInsertModel<typeof messages>;
